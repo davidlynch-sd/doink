@@ -1,15 +1,12 @@
-build:
-	gcc -Wall -Wextra -pedantic -march=native -o bin/doink src/main.c -lncurses
+doink: main.o editor.o
+	gcc -o bin/doink main.o editor.o -lncurses
 
-run: build
-	./bin/doink
+main.o: 
+editor.o: 
 
 lint:
-	astyle --suffix=none src/main.c
-	cppcheck src/main.c
+	astyle --style=java --suffix=none main.c
+	cppcheck .
 
-release: lint
-	gcc -Wall -Wextra -march=native -O4 -o bin/doink src/main.c -lncurses
-
-install: release
-	cp bin/doink /usr/bin/doink
+clean:
+	rm *.o bin/doink
